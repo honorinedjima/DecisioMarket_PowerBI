@@ -1,0 +1,78 @@
+-- =============================
+-- DecisioMarket - Mesures DAX
+-- Basé sur le modèle étoile du DWH PostgreSQL
+-- =============================
+
+-- KPIs Tableau de bord
+CA Total = SUM(fait_vente[montant])
+
+Total Frais de Port = SUM(fait_vente[frais_port])
+
+Nombre de Pays Couverts = DISTINCTCOUNT(dim_client[pays])
+
+Nombre de Transporteurs = DISTINCTCOUNT(dim_transporteur[id_transporteur])
+
+Quantité Vendue = SUM(fait_vente[qte])
+
+Remise Moyenne = AVERAGE(fait_vente[remise])
+
+Taux de Remise % = DIVIDE(SUM(fait_vente[remise]), COUNTROWS(fait_vente), 0)
+
+CA Moyen par Vente = DIVIDE([CA Total], COUNTROWS(fait_vente), 0)
+
+-- KPIs Finance
+Nombre de Commandes = DISTINCTCOUNT(dim_commande[nocom])
+
+Marge Brute = SUMX(
+    fait_vente,
+    fait_vente[montant] - (fait_vente[qte] * fait_vente[prixunit])
+)
+
+Marge Brute % = DIVIDE([Marge Brute], [CA Total], 0)
+
+CA par Produit = [CA Total]
+
+CA par Fournisseur = [CA Total]
+
+CA par Transporteur = [CA Total]
+
+Frais Port par Transporteur = [Total Frais de Port]
+
+Remise Totale = SUM(fait_vente[remise])
+
+-- KPIs Livraison
+Quantité Livrée = SUM(fait_livraison[quantitelivree])
+
+Écart Moyen Livraison = AVERAGE(fait_livraison[ecartdelai])
+
+Écart Max Livraison = MAX(fait_livraison[ecartdelai])
+
+Nb Livraisons = COUNTROWS(fait_livraison)
+
+Produits à Réapprovisionner = COUNTROWS(
+    FILTER(
+        dim_produit,
+        (dim_produit[unitstock] - dim_produit[unitescom]) < dim_produit[niveaureap]
+    )
+)
+
+Taux Réapprovisionnement = DIVIDE(
+    [Produits à Réapprovisionner],
+    COUNTROWS(dim_produit),
+    0
+)
+
+Délai Moyen Transporteur = AVERAGE(fait_livraison[ecartdelai])
+
+-- Mesures temporelles
+CA YTD = TOTALYTD([CA Total], dim_date[date_complet])
+
+CA MTD = TOTALMTD([CA Total], dim_date[date_complet])
+
+CA QTD = TOTALQTD([CA Total], dim_date[date_complet])
+
+CA Année Précédente = CALCULATE([CA Total], SAMEPERIODLASTYEAR(dim_date[date_complet]))
+
+Variation CA vs Année Précédente = [CA Total] - [CA Année Précédente]
+
+Variation CA % vs Année Précédente = DIVIDE([Variation CA vs Année Précédente], [CA Année Précédente], 0)

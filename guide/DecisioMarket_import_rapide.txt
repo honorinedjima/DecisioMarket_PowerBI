@@ -1,0 +1,16 @@
+DECISIOMARKET - IMPORT RAPIDE DANS POWER BI DESKTOP
+
+1. Ouvrir Power BI Desktop.
+2. Obtenir des données > PostgreSQL.
+3. Saisir le serveur, la base et choisir le mode Import.
+4. Charger les tables : dim_date, dim_client, dim_fournisseur, dim_produit, dim_employe, dim_transporteur, dim_commande, fait_vente, fait_livraison.
+5. Créer les relations décrites dans configuration/DecisioMarket_modele_relations.txt.
+6. Importer le thème : theme/DecisioMarket_theme.json.
+7. Créer les mesures du fichier mesures/DecisioMarket_mesures.dax.
+8. Construire les 3 pages : Tableau de bord, Finance, Livraison en suivant configuration/DecisioMarket_pages_et_visuels.csv.
+9. Ajouter les segments : annee, trimestre, mois, pays, categorie, nomtran.
+10. Enregistrer le rapport sous : DecisioMarket.pbix.
+
+CONSEIL :
+- Pour aller plus vite, créer d'abord la page Tableau de bord, puis Finance, puis Livraison.
+- Si vous voulez une première version très rapide, vous pouvez brancher directement les vues analytiques F1 à F8 et L1 à L5 (pour plus de detail sur ces vues consulter ce repository : https://github.com/honorinedjima/e-commerce-Data-Warehouse). 

@@ -1,0 +1,40 @@
+MODELE RECOMMANDE
+
+Tables à importer :
+- dim_date
+- dim_client
+- dim_fournisseur
+- dim_produit
+- dim_employe
+- dim_transporteur
+- dim_commande
+- fait_vente
+- fait_livraison
+
+Relations :
+- fait_vente[id_client] -> dim_client[id_client] (Many-to-One, single)
+- fait_vente[id_produit] -> dim_produit[id_produit] (Many-to-One, single)
+- fait_vente[id_date] -> dim_date[id_date] (Many-to-One, single)
+- fait_vente[id_transporteur] -> dim_transporteur[id_transporteur] (Many-to-One, single)
+- fait_vente[id_employe] -> dim_employe[id_employe] (Many-to-One, single)
+
+- fait_livraison[id_commande] -> dim_commande[id_commande] (Many-to-One, single)
+- fait_livraison[id_date] -> dim_date[id_date] (Many-to-One, single)
+- fait_livraison[id_transporteur] -> dim_transporteur[id_transporteur] (Many-to-One, single)
+- fait_livraison[id_client] -> dim_client[id_client] (Many-to-One, single)
+- fait_livraison[id_produit] -> dim_produit[id_produit] (Many-to-One, single)
+
+Masquer dans le modèle :
+- Toutes les clés techniques id_*
+- Colonnes de support non utilisées directement par les visuels
+
+Segments recommandés :
+- annee
+- trimestre
+- mois
+- pays
+- region
+- categorie
+- nomtran
+- fournisseur
+- employe
